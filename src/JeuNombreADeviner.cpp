@@ -51,7 +51,39 @@ int TirerNombreMystere()
 
 void JouerPartie(TJoueur& un_joueur, int nombreADeviner)
 {
-    //A COMPLETER
+    {
+        int nombre_ecrit;
+        int i;
+        nombre_ecrit = -1;
+        while (i<5)
+        {
+            cout << "Devinez le nombre mystere, qui est entre 1 & 10: \n";
+            cin >> nombre_ecrit;
+            if (nombre_ecrit==nombreADeviner)
+            {
+                (cout<< "Felicitation! Tu as trouvé le nombre mystere!\n");
+                un_joueur.nbPartiesJouees++;
+                un_joueur.nbPartiesGagnees++;
+                un_joueur.nbTentatives=un_joueur.nbTentatives+i;
+            }
+            if (nombre_ecrit >= nombreADeviner)
+            {
+                (cout << "Plus petit: \n");
+                i++;
+            }
+            if (nombre_ecrit <= nombreADeviner)
+            {
+                (cout << "Plus grand: \n");
+                i++;
+            }
+        }
+        if (i==5)
+        {
+            cout << "Tu as perdu...\n";
+            un_joueur.nbPartiesJouees++;
+            un_joueur.nbTentatives=un_joueur.nbTentatives + i;
+        }
+    }
 }
 
 
