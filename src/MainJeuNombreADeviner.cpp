@@ -16,6 +16,8 @@ using namespace std;
 
 int main()
 {
+    cout << "Bienvenue dans JeuNombreADeviner! \n \nDonnez votre nom pour commencer: ";
+    cin >>
 
     return 0;
 }

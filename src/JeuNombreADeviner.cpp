@@ -15,13 +15,6 @@ using namespace std;
 #include "../include/JeuNombreAdeviner.h"
 #include <time.h>
 
-// Nom :InitJoueur
-// Rôle : Crée un joueur. Initialise toutes les informations du joueur.
-//        Le nombre de tentatives, de parties gagnées et de parties jouées seront à 0.
-// Paramètres d'entrée : string_un_nom
-// Paramètres de sortie : TJoueur
-// Paramètres d'entrée/sortie : &joueurAcreer
-
 void InitJoueur(TJoueur& joueurAcreer, string un_nom)
 {
     joueurAcreer.nom = un_nom; //initialisation du nom du joueur
@@ -29,11 +22,12 @@ void InitJoueur(TJoueur& joueurAcreer, string un_nom)
     joueurAcreer.nbPartiesGagnees = 0; //réinitialisation des parties gagnées
     joueurAcreer.nbTentatives = 0; //réinitialisation des tentatives
 }
-
-
-// Nom :TirerNombreMystere
-// Rôle : Tire aléatoirement un nombre à deviner entre 0 et 10
-// Valeur de retour : nombre à deviner
+// Nom :InitJoueur
+// Rôle : Crée un joueur. Initialise toutes les informations du joueur.
+//        Le nombre de tentatives, de parties gagnées et de parties jouées seront à 0.
+// Paramètres d'entrée : string_un_nom
+// Paramètres de sortie : TJoueur
+// Paramètres d'entrée/sortie : &joueurAcreer
 
 int TirerNombreMystere()
 {
@@ -41,62 +35,68 @@ int TirerNombreMystere()
     int nombreADeviner = rand() % 10 + 1;
     return nombreADeviner;
 }
+// Nom :TirerNombreMystere
+// Rôle : Tire aléatoirement un nombre à deviner entre 0 et 10
+// Valeur de retour : nombre à deviner
 
+void JouerPartie(TJoueur& un_joueur, int nombreADeviner)
+{
+    {
+        int nombre_ecrit; //nombre écrit par le joueur
+        int i; //nombre de tentatives
+        nombre_ecrit = -1;
+        while (i<10) //tant que le joueur ne dépasse pas ne nombre de tentative
+        {
+            cout << "Devinez le nombre mystere, qui est entre 1 & 10: \n"; //affichage de la demande
+            cin >> nombre_ecrit; //récupération d'un nombre écrit par le joueur
+            if (nombre_ecrit==nombreADeviner) //le joueur trouve le nombre
+            {
+                (cout<< "Felicitation! Tu as trouvé le nombre mystere!\n");
+                MajResultatsJoueur(un_joueur, i+1, true); //nom du joueur, nombre de tentative, victoire en true
+            }
+            else if (nombre_ecrit >= nombreADeviner) //si le nombre est supérieur au nombre mystère
+            {
+                (cout << "Plus petit: \n");
+                i++; //nombre de tentative +1
+            }
+            else if (nombre_ecrit <= nombreADeviner) //si le nombre est inférieur au nombre mystère
 
+            {
+                (cout << "Plus grand: \n");
+                i++; //nombre de tentative +1
+            }
+        }
+        if (i==10) //le joueur ici dépasse le nombre de tentative
+        {
+            cout << "Tu as perdu...\n";
+            MajResultatsJoueur(un_joueur,10,false); //nom du joueur, nombre de tentative = 10, victoire en false = défaite
+        }
+    }
+}
 // Nom :JouerPartie
 // Rôle : Fait jouer une partie au joueur passé en paramètre
 //        A la fin, met à jour les informations du joueur
 // Paramètres d'entrée: &un_joueur
 // Paramètres de sortie: TJoueur, int nombreADeviner
 
-void JouerPartie(TJoueur& un_joueur, int nombreADeviner)
+void MajResultatsJoueur(TJoueur &joueur, int nbEssais, bool gagne)
 {
+    joueur.nbTentatives = nbEssais + joueur.nbTentatives;
+
+    if (gagne = true)
     {
-        int nombre_ecrit;
-        int i;
-        nombre_ecrit = -1;
-        while (i<5)
-        {
-            cout << "Devinez le nombre mystere, qui est entre 1 & 10: \n";
-            cin >> nombre_ecrit;
-            if (nombre_ecrit==nombreADeviner)
-            {
-                (cout<< "Felicitation! Tu as trouvé le nombre mystere!\n");
-                un_joueur.nbPartiesJouees++;
-                un_joueur.nbPartiesGagnees++;
-                un_joueur.nbTentatives=un_joueur.nbTentatives+i;
-            }
-            if (nombre_ecrit >= nombreADeviner)
-            {
-                (cout << "Plus petit: \n");
-                i++;
-            }
-            if (nombre_ecrit <= nombreADeviner)
-            {
-                (cout << "Plus grand: \n");
-                i++;
-            }
-        }
-        if (i==5)
-        {
-            cout << "Tu as perdu...\n";
-            un_joueur.nbPartiesJouees++;
-            un_joueur.nbTentatives=un_joueur.nbTentatives + i;
-        }
+        joueur.nbPartiesGagnees = joueur.nbPartiesGagnees + 1;
     }
 }
-
-
 // Nom : MajResultatsJoueur
 // Rôle : met à jour les informations du joueur passé en paramètre
 // Paramètres d'entrée: bool gagne, int nbEssais
 // Paramètres d'entrée/sortie : TJoueur &joueur
 
-void MajResultatsJoueur(TJoueur &joueur, int nbEssais, bool gagne)
+void ResultatsJoueur(TJoueur joueur, int& nbsucces, int& nbechec, int& nbessais)
 {
-   // A COMPLETER
+    // A COMPLETER
 }
-
 // Nom : ResultatsJoueur
 // Rôle : indique les résultats du joueur passé en paramètre
 //        le nombre de parties gagnées, le nombre de parties perdues, le nombre d'essais total
@@ -104,18 +104,11 @@ void MajResultatsJoueur(TJoueur &joueur, int nbEssais, bool gagne)
 // Paramètres d'entrée: TJoueur joueur
 // Paramètres de sortie: int &nbsucces, int &nbechec, int & nbessais
 
-void ResultatsJoueur(TJoueur joueur, int& nbsucces, int& nbechec, int& nbessais)
-{
-    // A COMPLETER
-}
-
-// Nom :Nom
-// Rôle : retourne le nom du joueur
-// Paramètres d'entrée: le joueur dont on veut le nom
-// Valeur de retour : nom du joueur
-
 string Nom(TJoueur joueur){
 
     return joueur.nom;
 }
-
+// Nom :Nom
+// Rôle : retourne le nom du joueur
+// Paramètres d'entrée: le joueur dont on veut le nom
+// Valeur de retour : nom du joueur
