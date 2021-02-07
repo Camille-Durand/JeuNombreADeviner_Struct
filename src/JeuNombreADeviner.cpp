@@ -41,36 +41,32 @@ int TirerNombreMystere()
 
 void JouerPartie(TJoueur& un_joueur, int nombreADeviner)
 {
+    int nombre_ecrit = -1; //nombre écrit par le joueur
+    int i; //nombre de tentatives
+    while (i<5) //tant que le joueur ne dépasse pas ne nombre de tentative
     {
-        int nombre_ecrit; //nombre écrit par le joueur
-        int i; //nombre de tentatives
-        nombre_ecrit = -1;
-        while (i<10) //tant que le joueur ne dépasse pas ne nombre de tentative
+        cout << "Devinez le nombre mystere, qui est entre 1 & 10: \n"; //affichage de la demande
+        cin >> nombre_ecrit; //récupération d'un nombre écrit par le joueur
+        if (nombre_ecrit==nombreADeviner) //le joueur trouve le nombre
         {
-            cout << "Devinez le nombre mystere, qui est entre 1 & 10: \n"; //affichage de la demande
-            cin >> nombre_ecrit; //récupération d'un nombre écrit par le joueur
-            if (nombre_ecrit==nombreADeviner) //le joueur trouve le nombre
-            {
-                (cout<< "Felicitation! Tu as trouvé le nombre mystere!\n");
-                MajResultatsJoueur(un_joueur, i+1, true); //nom du joueur, nombre de tentative, victoire en true
-            }
-            else if (nombre_ecrit >= nombreADeviner) //si le nombre est supérieur au nombre mystère
-            {
-                (cout << "Plus petit: \n");
-                i++; //nombre de tentative +1
-            }
-            else if (nombre_ecrit <= nombreADeviner) //si le nombre est inférieur au nombre mystère
-
-            {
-                (cout << "Plus grand: \n");
-                i++; //nombre de tentative +1
-            }
+            (cout<< "Felicitation! Tu as trouvé le nombre mystere!\n");
+            MajResultatsJoueur(un_joueur, i+1, true); //nom du joueur, nombre de tentative, victoire en true
         }
-        if (i==10) //le joueur ici dépasse le nombre de tentative
+        else if (nombre_ecrit >= nombreADeviner) //si le nombre est supérieur au nombre mystère
         {
-            cout << "Tu as perdu...\n";
-            MajResultatsJoueur(un_joueur,10,false); //nom du joueur, nombre de tentative = 10, victoire en false = défaite
+            (cout << "Plus petit: \n");
+            i++; //nombre de tentative +1
         }
+        else if (nombre_ecrit <= nombreADeviner) //si le nombre est inférieur au nombre mystère
+        {
+            (cout << "Plus grand: \n");
+            i++; //nombre de tentative +1
+        }
+    }
+    if (i==5) //le joueur ici dépasse le nombre de tentative
+    {
+        cout << "Tu as perdu...\n";
+        MajResultatsJoueur(un_joueur,10,false); //nom du joueur, nombre de tentative = 10, victoire en false = défaite
     }
 }
 // Nom :JouerPartie
@@ -95,7 +91,9 @@ void MajResultatsJoueur(TJoueur &joueur, int nbEssais, bool gagne)
 
 void ResultatsJoueur(TJoueur joueur, int& nbsucces, int& nbechec, int& nbessais)
 {
-    // A COMPLETER
+    nbsucces = joueur.nbPartiesGagnees/2;
+    nbechec = (joueur.nbPartiesJouees - joueur.nbPartiesGagnees)/2;
+    nbessais = joueur.nbTentatives/2;
 }
 // Nom : ResultatsJoueur
 // Rôle : indique les résultats du joueur passé en paramètre

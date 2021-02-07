@@ -16,8 +16,15 @@ using namespace std;
 
 int main()
 {
-    cout << "Bienvenue dans JeuNombreADeviner! \n \nDonnez votre nom pour commencer: ";
-    cin >>
+    string un_nom;
+    TJoueur joueurAcreer;
+    cout << "Bienvenue dans JeuNombreADeviner! Veuillez ecrire votre nom de joueur: " << endl;
+    cin >> un_nom;
+    InitJoueur(joueurAcreer, un_nom);
+    JouerPartie(joueurAcreer, TirerNombreMystere());
+    MajResultatsJoueur(joueurAcreer, joueurAcreer.nbTentatives, joueurAcreer.nbPartiesGagnees);
+    ResultatsJoueur(joueurAcreer, joueurAcreer.nbPartiesGagnees, joueurAcreer.nbPartiesJouees, joueurAcreer.nbTentatives);
+    cout << "Tu as mis " << joueurAcreer.nbTentatives << " tentatives, tu as reussi " << joueurAcreer.nbPartiesGagnees << " parties, et tu as perdu " << joueurAcreer.nbPartiesJouees << " parties.";
 
     return 0;
 }
